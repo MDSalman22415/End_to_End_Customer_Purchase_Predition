@@ -1,2 +1,7 @@
 Flask
 fastapi
+numpy
+pandas
+matplotlib
+seaborn
+scikit-learn
