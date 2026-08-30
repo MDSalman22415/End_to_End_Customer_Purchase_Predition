@@ -1,2 +1,4 @@
 End_to_End_E_Commerce_Purchsed_Prediction.egg-info/
 src/__pycache__
+src/components/__pycache__/data_transformation.cpython-313.pyc
+src/components/__pycache__/data_ingestion.cpython-313.pyc

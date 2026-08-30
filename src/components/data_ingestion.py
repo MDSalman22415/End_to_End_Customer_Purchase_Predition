@@ -9,6 +9,8 @@ import pandas as pd
 from src.components.data_transformation import DataTransformationConfig
 from src.components.data_transformation import DataTransformation
 
+from src.components.Model_trainer import ModelTrainerConfig
+from src.components.Model_trainer import ModelTrainer
 
 
 @dataclass
@@ -69,9 +71,30 @@ class DataIngestion:
         except Exception as e:
             raise CustomException(sys, e)
         
-if __name__=="__main__":
-    obj = DataIngestion()                           
+if __name__ == "__main__":
+    print("MAIN BLOCK STARTED")
+
+    obj = DataIngestion()
+    print("Data ingestion object created")
+
     train_data, test_data = obj.initate_data_ingestion()
-    
+    print("Data ingestion completed")
+
     data_trainformation = DataTransformation()
-    train_arr, test_arr, _ = data_trainformation.initiate_data_transfromation(train_data, test_data)
+    print("Data transformation object created")
+
+    train_arr, test_arr, _ = data_trainformation.initiate_data_transfromation(
+        train_data, test_data
+    )
+    print("Data transformation completed")
+
+    model_trainer = ModelTrainer()
+    print("Model trainer object created")
+
+    result = model_trainer.initiate_model_traineer(
+        train_arr,
+        test_arr
+    )
+
+    print("Training completed")
+    print(result)
