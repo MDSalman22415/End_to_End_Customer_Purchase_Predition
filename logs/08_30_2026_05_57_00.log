@@ -1,0 +1,7 @@
+[ 2026-08-30 05:57:04,648 ] 25 root - INFO - Entered the data ingestion methos or component
+[ 2026-08-30 05:57:04,725 ] 30 root - INFO - Read the dataset as dataframe
+[ 2026-08-30 05:57:04,726 ] 34 root - INFO - artifactes folder is creted
+[ 2026-08-30 05:57:04,947 ] 38 root - INFO - Row data file is save in artifates folder
+[ 2026-08-30 05:57:04,947 ] 40 root - INFO - Train test split is initiated
+[ 2026-08-30 05:57:05,218 ] 59 root - INFO - Train test split is comleted
+[ 2026-08-30 05:57:05,218 ] 61 root - INFO - Ingestion of the data is completed

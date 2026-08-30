@@ -6,6 +6,9 @@ from sklearn.model_selection import train_test_split
 from dataclasses import dataclass
 import pandas as pd
 
+from src.components.data_transformation import DataTransformationConfig
+from src.components.data_transformation import DataTransformation
+
 
 
 @dataclass
@@ -67,5 +70,8 @@ class DataIngestion:
             raise CustomException(sys, e)
         
 if __name__=="__main__":
-    obj = DataIngestion()
-    obj.initate_data_ingestion()
+    obj = DataIngestion()                           
+    train_data, test_data = obj.initate_data_ingestion()
+    
+    data_trainformation = DataTransformation()
+    train_arr, test_arr, _ = data_trainformation.initiate_data_transfromation(train_data, test_data)

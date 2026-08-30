@@ -1,0 +1,12 @@
+[ 2026-08-30 06:08:53,022 ] 25 root - INFO - Entered the data ingestion methos or component
+[ 2026-08-30 06:08:53,111 ] 30 root - INFO - Read the dataset as dataframe
+[ 2026-08-30 06:08:53,113 ] 34 root - INFO - artifactes folder is creted
+[ 2026-08-30 06:08:53,340 ] 38 root - INFO - Row data file is save in artifates folder
+[ 2026-08-30 06:08:53,341 ] 40 root - INFO - Train test split is initiated
+[ 2026-08-30 06:08:53,578 ] 59 root - INFO - Train test split is comleted
+[ 2026-08-30 06:08:53,578 ] 61 root - INFO - Ingestion of the data is completed
+[ 2026-08-30 06:08:53,767 ] 83 root - INFO - Reading train data and test data is completed
+[ 2026-08-30 06:08:53,768 ] 86 root - INFO - Obtaining preprocessor object
+[ 2026-08-30 06:08:53,768 ] 62 root - INFO - Numerical columns:   ['age', 'income', 'browsing_time', 'pages_viewed', 'previous_purchases']
+[ 2026-08-30 06:08:53,768 ] 63 root - INFO - Categorical columns: ['gender', 'product_categorydiscount_used']
+[ 2026-08-30 06:08:53,774 ] 98 root - INFO - Applying preprocessing object on training dataframe and testing dataframe
