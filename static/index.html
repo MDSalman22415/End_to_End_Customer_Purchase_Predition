@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout Signal — Purchase Predictor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Mono:wght@400;700&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="counter">
+
+  <!-- ===================== LEFT: TERMINAL / FORM ===================== -->
+  <main class="terminal">
+
+    <header class="terminal__header">
+      <div class="terminal__brand">
+        <span class="terminal__mark">CS</span>
+        <div>
+          <h1>Checkout Signal</h1>
+          <p class="terminal__subtitle">AI-powered purchase prediction, at the register</p>
+        </div>
+      </div>
+      <div class="status" id="apiStatus" aria-live="polite">
+        <span class="status__dot" id="statusDot"></span>
+        <span id="statusText">Checking API…</span>
+      </div>
+    </header>
+
+    <form class="ticket" id="predictForm" novalidate>
+
+      <div class="ticket__row ticket__row--section">
+        <span class="ticket__section-label">Customer</span>
+      </div>
+
+      <div class="field-grid">
+        <div class="field">
+          <label for="age">Age</label>
+          <input type="number" id="age" name="age" min="18" max="100" placeholder="18–100" required>
+          <span class="field__hint">18 to 100 years</span>
+          <span class="field__error" id="err-age"></span>
+        </div>
+
+        <div class="field">
+          <label for="gender">Gender</label>
+          <select id="gender" name="gender" required>
+            <option value="" disabled selected>Select…</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+            <option value="Unknown">Unknown</option>
+          </select>
+          <span class="field__hint">As provided by the customer</span>
+        </div>
+
+        <div class="field">
+          <label for="income">Income</label>
+          <div class="field__prefixed">
+            <span>$</span>
+            <input type="number" id="income" name="income" min="100" max="20000" step="0.01" placeholder="100–20,000" required>
+          </div>
+          <span class="field__hint">Monthly, $100–$20,000</span>
+          <span class="field__error" id="err-income"></span>
+        </div>
+
+        <div class="field">
+          <label for="product_category">Category browsed</label>
+          <select id="product_category" name="product_category" required>
+            <option value="" disabled selected>Select…</option>
+            <option value="Fashion">Fashion</option>
+            <option value="Grocery">Grocery</option>
+            <option value="Home">Home</option>
+            <option value="Beauty">Beauty</option>
+            <option value="Electronics">Electronics</option>
+            <option value="Sports">Sports</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="ticket__tear" aria-hidden="true"></div>
+
+      <div class="ticket__row ticket__row--section">
+        <span class="ticket__section-label">Session activity</span>
+      </div>
+
+      <div class="field-grid">
+        <div class="field">
+          <label for="browsing_time">Browsing time</label>
+          <div class="field__suffixed">
+            <input type="number" id="browsing_time" name="browsing_time" min="1" max="200" step="0.1" placeholder="1–200" required>
+            <span>min</span>
+          </div>
+          <span class="field__error" id="err-browsing_time"></span>
+        </div>
+
+        <div class="field">
+          <label for="pages_viewed">Pages viewed</label>
+          <input type="number" id="pages_viewed" name="pages_viewed" min="2" max="30" step="1" placeholder="2–30" required>
+          <span class="field__error" id="err-pages_viewed"></span>
+        </div>
+
+        <div class="field">
+          <label for="previous_purchases">Previous purchases</label>
+          <input type="number" id="previous_purchases" name="previous_purchases" min="2" max="80" step="1" placeholder="2–80" required>
+          <span class="field__error" id="err-previous_purchases"></span>
+        </div>
+
+        <div class="field">
+          <label for="discount_used">Discount used</label>
+          <select id="discount_used" name="discount_used" required>
+            <option value="" disabled selected>Select…</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+            <option value="unknown">Unknown</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="ticket__actions">
+        <button type="submit" class="btn btn--primary" id="submitBtn">
+          <span class="btn__label">Ring in prediction</span>
+          <span class="btn__spinner" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="btn btn--ghost" id="resetBtn">Clear ticket</button>
+      </div>
+
+      <p class="form-note" id="formNote" role="alert"></p>
+    </form>
+  </main>
+
+  <!-- ===================== RIGHT: RECEIPT / RESULT ===================== -->
+  <aside class="receipt-bay">
+    <div class="receipt-slot">
+      <div class="receipt" id="receipt">
+        <div class="receipt__idle" id="receiptIdle">
+          <svg width="46" height="46" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 2h12a1 1 0 0 1 1 1v18l-2.5-1.5L14 21l-2-1.5L10 21l-2.5-1.5L5 21V3a1 1 0 0 1 1-1Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+            <path d="M8 7h8M8 10.5h8M8 14h5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          </svg>
+          <p>Fill in the ticket — the printout appears here.</p>
+        </div>
+
+        <div class="receipt__print" id="receiptPrint" hidden>
+          <div class="receipt__brand">CHECKOUT SIGNAL</div>
+          <div class="receipt__line receipt__line--dashed"></div>
+          <div class="receipt__meta" id="receiptTimestamp"></div>
+
+          <div class="receipt__verdict" id="receiptVerdict">
+            <span class="receipt__verdict-icon" id="verdictIcon"></span>
+            <span class="receipt__verdict-text" id="verdictText"></span>
+          </div>
+          <p class="receipt__explain" id="verdictExplain"></p>
+
+          <div class="receipt__line receipt__line--dashed"></div>
+
+          <table class="receipt__table" id="receiptTable"></table>
+
+          <div class="receipt__line receipt__line--dashed"></div>
+          <div class="receipt__barcode" aria-hidden="true">
+            <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+          </div>
+          <div class="receipt__thanks">thank you for shopping</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
